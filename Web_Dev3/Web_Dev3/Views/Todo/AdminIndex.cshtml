@@ -1,0 +1,43 @@
+﻿@using Web_Dev3.Models;
+@{
+    ViewBag.Title = "AdminIndex";
+}
+
+<h2>AdminIndex</h2>
+
+<table class="table">
+    @{ ApplicationUser oldUser = null; }
+    <!--foreach (string[] item in (List<string[]>)ViewBag.UserAndTodos)-->
+    @foreach (ICollection<TodoModel> item in (List<ICollection<TodoModel>>)ViewBag.OwnerTodos)
+    {
+        foreach (TodoModel todo in item)
+        {
+            <!--       if (oldUser != item[0])
+                   {
+                       oldUser = item[0];-->
+            if (oldUser == null || oldUser != todo.Owner)
+            {
+                oldUser = todo.Owner;
+                <tr>
+                    <th>
+                        @todo.Owner.UserName
+                    </th>
+                    <th></th>
+                </tr>
+            }
+
+            <tr>
+                <td>
+                    @todo.Titel
+                </td>
+                <td>
+                    @todo.Description
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = todo.Id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = todo.Id })
+                </td>
+            </tr>
+        }
+    }
+</table>

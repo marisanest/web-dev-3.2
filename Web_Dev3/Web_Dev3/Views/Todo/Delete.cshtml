@@ -1,0 +1,38 @@
+﻿@model Web_Dev3.Models.TodoModel
+
+@{
+    ViewBag.Title = "Entfernen";
+}
+
+<h2>@Model.Titel - Entfernen</h2>
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="panel panel-default">
+           <div class="panel-body">
+              <div>
+                    Der folgende Eintrag wird entfernt:
+              </div>
+              <div>
+                    @Html.DisplayNameFor(model => model.Titel):
+                    @Html.DisplayFor(model => model.Titel)
+              </div>
+            <div>
+                @Html.DisplayNameFor(model => model.Description):
+                @Html.DisplayFor(model => model.Description)
+            </div>
+        </div>
+        <div class="panel-footer">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-actions no-color">
+                    <input type="submit" value="Entfernen" class="btn btn-danger btn-md" />
+                    <a href="/Todo/Index" class="btn btn-default btn-md">Abbrechen</a>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+</div>
