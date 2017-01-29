@@ -9,8 +9,9 @@
 
 <div class="row">
     <div class="col-md-4">
-        @if((List<ICollection<TodoModel>>)ViewBag.OwnerTodos != null){
-        foreach (ICollection<TodoModel> item in (List<ICollection<TodoModel>>)ViewBag.OwnerTodos)
+        @if ((List<ICollection<TodoModel>>)ViewBag.OwnerTodos != null)
+        {
+            foreach (ICollection<TodoModel> item in (List<ICollection<TodoModel>>)ViewBag.OwnerTodos)
             {
                 if (item.Any())
                 {
@@ -51,6 +52,6 @@
                     </div>
                 }
             }
-                                }
+        }
     </div>
 </div>
