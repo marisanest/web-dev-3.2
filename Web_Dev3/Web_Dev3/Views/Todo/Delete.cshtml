@@ -28,9 +28,11 @@
                 @Html.AntiForgeryToken()
 
                 <div class="form-actions no-color">
-                    <input type="submit" value="Entfernen" class="btn btn-danger btn-md" />
+                    <button type="submit" class="btn btn-danger btn-md">
+                        <i class="glyphicon glyphicon-trash"></i> Entfernen
+                    </button>
                     <a href="/Todo/Index" class="btn btn-default btn-md">Abbrechen</a>
-                </div>
+                </div>  
             }
         </div>
     </div>
