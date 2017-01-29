@@ -68,8 +68,6 @@ namespace Web_Dev3.Controllers
                         }
                     }
                 }
-            //    ViewData["userAndTodos"] = userAndTodos;
-           //     ViewData["userList"] = userList;
                 ViewData["ownerTodos"] = ownerTodos;
                 return View();
             }
@@ -115,7 +113,7 @@ namespace Web_Dev3.Controllers
         // GET: Todo/Edit/5
         public ActionResult Edit(int id)
         {
-            using (var db = new Models.ApplicationDbContext())
+            using (var db = new ApplicationDbContext())
             {
                 if (HttpContext.User.Identity.IsAuthenticated)
                 {
@@ -124,10 +122,11 @@ namespace Web_Dev3.Controllers
                     var list = db.Todo.Where(b => b.Id == id);
                     return View(list.First());
 
+                } else
+                {
+                    return RedirectToAction("LogIn", "Account", new { area = "" });
                 }
             }
-            //else redirect to login?!
-            return View();
         }
 
         // POST: Todo/Edit/5
@@ -141,7 +140,7 @@ namespace Web_Dev3.Controllers
                     return View(model);
                 }
 
-                using (var db = new Models.ApplicationDbContext())
+                using (var db = new ApplicationDbContext())
                 {
                     if (HttpContext.User.Identity.IsAuthenticated)
                     {
@@ -153,8 +152,7 @@ namespace Web_Dev3.Controllers
                     }
                     else
                     {
-                        //redirect to login?!
-                        return RedirectToAction(INDEX);
+                        return RedirectToAction("LogIn", "Account", new { area = "" });
                     }
                 }
             }
@@ -169,7 +167,7 @@ namespace Web_Dev3.Controllers
         {
             try
             {
-                using (var db = new Models.ApplicationDbContext())
+                using (var db = new ApplicationDbContext())
                 {
                     if (HttpContext.User.Identity.IsAuthenticated)
                     {
@@ -178,8 +176,7 @@ namespace Web_Dev3.Controllers
                     }
                     else
                     {
-                        //redirect to login?!
-                        return RedirectToAction(INDEX);
+                        return RedirectToAction("LogIn", "Account", new { area = "" });
                     }
                 }
             }
@@ -195,7 +192,7 @@ namespace Web_Dev3.Controllers
         {
             try
             {
-                using (var db = new Models.ApplicationDbContext())
+                using (var db = new ApplicationDbContext())
                 {
                     if (HttpContext.User.Identity.IsAuthenticated)
                     {
@@ -206,8 +203,7 @@ namespace Web_Dev3.Controllers
                     }
                     else
                     {
-                        //redirect to login?!
-                        return RedirectToAction(INDEX);
+                        return RedirectToAction("LogIn", "Account", new { area = "" });
                     }
                 }
             }
