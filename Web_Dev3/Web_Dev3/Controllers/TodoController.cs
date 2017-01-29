@@ -101,6 +101,10 @@ namespace Web_Dev3.Controllers
                         db.Todo.Add(model);
                         db.SaveChanges();
                     }
+                    else
+                    {
+                        return RedirectToAction("LogIn", "Account", new { area = "" });
+                    }
                 }
                 return RedirectToAction(INDEX);
             }
