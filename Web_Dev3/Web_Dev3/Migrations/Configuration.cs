@@ -24,7 +24,7 @@ namespace Web_Dev3.Migrations
             {
 
                 // first we create Admin rool  
-                var role = new Microsoft.AspNet.Identity.EntityFramework.IdentityRole();
+                var role = new IdentityRole();
                 role.Name = "Admin";
                 roleManager.Create(role);
 
@@ -47,63 +47,6 @@ namespace Web_Dev3.Migrations
 
                 }
             }
-
-
-            // creating Creating Employee role   
-            if (!roleManager.RoleExists("User"))
-            {
-                var role = new IdentityRole();
-                role.Name = "User";
-                roleManager.Create(role);
-
-            }
-
-
-
-            /*        if (!context.Roles.Any(r => r.Name == "Admin"))
-                    {
-                        var store = new RoleStore<IdentityRole>(context);
-                        var manager = new RoleManager<IdentityRole>(store);
-                        var role = new IdentityRole { Name = "Admin" };
-
-                        manager.Create(role);
-                        var userStore = new UserStore<ApplicationUser, ApplicationRole, int, ApplicationsUserLogin, ApplicationsUserRole, ApplicationUserClaim>(context);
-                        var userManager = new ApplicationUserManager();
-                    }
-
-        //            var userManager = new ApplicationUserManager(new UserStore<ApplicationUser, ApplicationRole, int, ApplicationUserLogin, ApplicationUserRole, ApplicationUserClaim>(context));
-
-                    if (!roleManager.Roles.Any())
-                    {
-                        await roleManager.CreateAsync(new ApplicationRole { Name = ApplicationRole.AdminRoleName });
-                        await roleManager.CreateAsync(new ApplicationRole { Name = ApplicationRole.AffiliateRoleName });
-                    }
-
-                    if (!userManager.Users.Any(u => u.UserName == "shimmy"))
-                    {
-                        var user = new ApplicationUser
-                        {
-                            UserName = "shimmy",
-                            Email = "shimmy@gmail.com",
-                            EmailConfirmed = true,
-                            PhoneNumber = "0123456789",
-                            PhoneNumberConfirmed = true
-                        };
-
-                        await userManager.CreateAsync(user, "****");
-                        await userManager.AddToRoleAsync(user.Id, ApplicationRole.AdminRoleName);
-                        //  This method will be called after migrating to the latest version.
-
-                        //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
-                        //  to avoid creating duplicate seed data. E.g.
-                        //
-                        //    context.People.AddOrUpdate(
-                        //      p => p.FullName,
-                        //      new Person { FullName = "Andrew Peters" },
-                        //      new Person { FullName = "Brice Lambson" },
-                        //      new Person { FullName = "Rowan Miller" }
-                        //    );
-                        //*/
         }
     }
 }

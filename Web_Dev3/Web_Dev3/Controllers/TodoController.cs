@@ -30,15 +30,6 @@ namespace Web_Dev3.Controllers
                         var loggedInUser = HttpContext.User.Identity.Name;
                         var user = db.Users.First(u => u.Email == loggedInUser);
                         var todoList = user.Todos.ToList();
-                        /*Nachdem virtual Membervariable zu IdentityModels hinzugefügt habe, kann auf users Membervariable statt auf Datenbank zugegriffen werden
-                         * kann auch noch bei den anderen Methoden implementiert werden.. 
-                         *     var list = db.Todo.Where(b => b.Owner.Id == user.Id).ToList();
-                               List<TodoModel> todoList = new List<TodoModel>();
-                               foreach (var item in list){
-                               var todo = new TodoModel();
-                               todo = item;
-                               todoList.Add(todo);
-                           }*/
                         return View(todoList);
                     }
                 }
@@ -50,36 +41,37 @@ namespace Web_Dev3.Controllers
         {
             using (var db = new ApplicationDbContext())
             {
-                var userList = db.Users.ToList();
-                if (userList == null)
+                List<ApplicationUser> userList;
+                try
+                {
+                    userList = db.Users.ToList();
+                }
+                catch
                 {
                     return View();
                 }
-                else
+                var userAndTodos = new List<string[]>();
+                var ownerTodos = new List<ICollection<TodoModel>>();
+                foreach (var user in userList)
                 {
-                    var userAndTodos = new List<string[]>();
-                    var ownerTodos = new List<ICollection<TodoModel>>();
-                    foreach (var user in userList)
+                    if (!user.Roles.Equals(ADMIN))
                     {
-                        if (!user.Roles.Equals(ADMIN))
+                        var todolist = user.Todos.ToList();
+                        ownerTodos.Add(todolist);
+                        foreach (var todo in todolist)
                         {
-                            var todolist = user.Todos.ToList();
-                            ownerTodos.Add(todolist);
-                            foreach (var todo in todolist)
-                            {
-                                string[] todos = new string[3];
-                                todos[0] = user.UserName;
-                                todos[1] = todo.Titel;
-                                todos[2] = todo.Description;
-                                userAndTodos.Add(todos);
-                            }
+                            string[] todos = new string[3];
+                            todos[0] = user.UserName;
+                            todos[1] = todo.Titel;
+                            todos[2] = todo.Description;
+                            userAndTodos.Add(todos);
                         }
                     }
-                    ViewData["userAndTodos"] = userAndTodos;
-                    ViewData["userList"] = userList;
-                    ViewData["ownerTodos"] = ownerTodos;
-                    return View();
                 }
+            //    ViewData["userAndTodos"] = userAndTodos;
+           //     ViewData["userList"] = userList;
+                ViewData["ownerTodos"] = ownerTodos;
+                return View();
             }
         }
 
@@ -117,7 +109,6 @@ namespace Web_Dev3.Controllers
             catch
             {
                 return RedirectToAction(INDEX);
-                //                return View();
             }
         }
 
